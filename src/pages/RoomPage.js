@@ -1,9 +1,10 @@
 import React from 'react';
 import { Container, Row, Col, Table, Button } from 'react-bootstrap';
 import { useRoomManager } from '../hooks/useRoomManager';
-import PaginationComponent from '../components/PaginationComponent';
-import RoomModalComponent from '../components/RoomModalComponent';
-import DeleteConfirmationModalComponent from '../components/DeleteRoomModalComponent';
+import PaginationComponent from '../components/common-components/PaginationComponent';
+import RoomModalComponent from '../components/room-components/RoomModalComponent';
+import DeleteConfirmationModalComponent from '../components/room-components/DeleteRoomModalComponent';
+import {Link} from 'react-router-dom';
 
 function RoomPage() {
   const {
@@ -63,7 +64,13 @@ function RoomPage() {
             ) : (
               rooms.content?.map(room => (
                 <tr key={room.id}>
-                  <td>{room.roomNumber}</td>
+                  <td>
+                    <li>
+                      <Link to={`/rooms/${room.id}`} className="text-decoration-none">
+                        {room.roomNumber}
+                      </Link>
+                    </li>         
+                  </td>
                   <td>{room.adultCapacity}</td>
                   <td>{room.childrenCapacity}</td>
                   <td>Rp {Number(room.roomPrice).toLocaleString('id-ID')}</td>

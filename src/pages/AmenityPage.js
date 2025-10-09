@@ -1,12 +1,12 @@
 import React from 'react';
 import { Container, Row, Col, Table, Button } from 'react-bootstrap';
-import { useServiceManager } from '../hooks/useServiceManager';
-import ServiceModalComponent from '../components/service-components/ServiceModalComponent';
-import DeleteServiceModalComponent from '../components/service-components/DeleteServiceModalComponent';
+import { useAmenityManager } from '../hooks/useAmenityManager';
+import AmenityModalComponent from '../components/amenity-components/AmenityModalComponent';
+import DeleteAmenityModalComponent from '../components/amenity-components/DeleteAmenityModalComponent';
 
-function ServicePage() {
+function AmenityPage() {
   const {
-    services,
+    amenities,
     loading,
     error,
     showModal,
@@ -17,12 +17,12 @@ function ServicePage() {
     handleShowEditModal,
     handleCloseModal,
     handleSubmit,
-    handleDeleteService,
+    handleDeleteAmenity,
     showDeleteModal,
     handleCloseDeleteModal,
     handleShowDeleteModal,
-    deletingService
-  } = useServiceManager();
+    deletingAmenity
+  } = useAmenityManager();
 
   if (loading && !showModal) {
     return <Container><p className="mt-4">Loading data...</p></Container>;
@@ -36,10 +36,10 @@ function ServicePage() {
     <Container>
       <div className='mt-4'>
         <Row className="align-items-center">
-          <Col><h3>Service Management</h3></Col>
+          <Col><h3>Amenity Management</h3></Col>
           <Col className="text-end">
             <Button variant="primary" onClick={handleShowAddModal}>
-              Add Service
+              Add Amenity
             </Button>
           </Col>
         </Row>
@@ -49,26 +49,24 @@ function ServicePage() {
             <tr>
               <th>Name</th>
               <th>Description</th>
-              <th>Price</th>
               <th>isActive</th>
               <th>Actions</th>
             </tr>
           </thead>
           <tbody>
-            {services.content?.length === 0 ? ( // Tambahkan optional chaining (?) untuk keamanan
+            {amenities.content?.length === 0 ? ( // Tambahkan optional chaining (?) untuk keamanan
               <tr><td colSpan="5" className="text-center">Belum ada data kamar.</td></tr>
             ) : (
-              services.map(service => (
-                <tr key={service.id}>
-                  <td>{service.name}</td>
-                  <td>{service.description}</td>
-                  <td>Rp {Number(service.price).toLocaleString('id-ID')}</td>
-                  <td>{service.isActive ? 'Yes' : 'No'}</td>
+              amenities.map(amenity => (
+                <tr key={amenity.id}>
+                  <td>{amenity.name}</td>
+                  <td>{amenity.description}</td>
+                  <td>{amenity.isActive ? 'Yes' : 'No'}</td>
                   <td>
-                    <Button variant="warning" size="sm" className="me-2" onClick={() => handleShowEditModal(service)}>
+                    <Button variant="warning" size="sm" className="me-2" onClick={() => handleShowEditModal(amenity)}>
                       Edit
                     </Button>
-                    <Button onClick={()=> handleShowDeleteModal(service.id)} variant="danger" size="sm">
+                    <Button onClick={()=> handleShowDeleteModal(amenity.id)} variant="danger" size="sm">
                       Delete
                     </Button>
                   </td>
@@ -79,23 +77,23 @@ function ServicePage() {
         </Table>
       </div>
 
-      <ServiceModalComponent 
+      <AmenityModalComponent 
         show={showModal}
         handleClose={handleCloseModal}
         handleSubmit={handleSubmit}
         isEditMode={isEditMode}
-        serviceData={formData}
-        setServiceData={setFormData}
+        amenityData={formData}
+        setAmenityData={setFormData}
       />
 
-      <DeleteServiceModalComponent
+      <DeleteAmenityModalComponent
           show={showDeleteModal}
           handleClose={handleCloseDeleteModal}
-          handleConfirm={handleDeleteService}
-          itemName={deletingService ? services.content.find(service => service.id === deletingService)?.name : ''}
+          handleConfirm={handleDeleteAmenity}
+          itemName={deletingAmenity ? amenities.content.find(amenity => amenity.id === deletingAmenity)?.name : ''}
         />
     </Container>
   );
 }
 
-export default ServicePage;
+export default AmenityPage;

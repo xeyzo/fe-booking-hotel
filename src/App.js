@@ -4,7 +4,9 @@ import HomePage from './pages/HomePage';
 import RoomsPage from './pages/RoomPage';
 import BookingsPage from './pages/BookingPage';
 import ServicePage from './pages/ServicePage';
-import NavigationBarComponent from './components/NavigationBarComponent';
+import NavigationBarComponent from './components/common-components/NavigationBarComponent';
+import AmenityPage from './pages/AmenityPage';
+import RoomDetailPage from './pages/RoomDetailPage';
 
 function App() {
   return (
@@ -15,6 +17,8 @@ function App() {
           <Route path="/rooms" element={<RoomsPage />} />
           <Route path="/bookings" element={<BookingsPage />} />
           <Route path='/services' element={<ServicePage />} />
+          <Route path='/amenities' element={<AmenityPage />} />
+          <Route path='/rooms/:id' element={<RoomDetailPage />} />
         </Routes>
 
     </div>

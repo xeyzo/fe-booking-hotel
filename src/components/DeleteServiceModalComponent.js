@@ -1,7 +1,7 @@
 import React from 'react';
 import { Modal, Button } from 'react-bootstrap';
 
-function DeleteConfirmationModalComponent({ show, handleClose, handleConfirm, itemName }) {
+function DeleteServiceModalComponent({ show, handleClose, handleConfirm, itemName }) {
   return (
     <Modal show={show} onHide={handleClose} centered>
       <Modal.Header closeButton>
@@ -9,7 +9,7 @@ function DeleteConfirmationModalComponent({ show, handleClose, handleConfirm, it
       </Modal.Header>
       <Modal.Body>
         {/* Tampilkan nama item yang akan dihapus agar lebih jelas */}
-        Apakah Anda yakin ingin menghapus kamar <strong>{itemName}</strong>? Tindakan ini tidak dapat dibatalkan.
+        Apakah Anda yakin ingin menghapus layanan <strong>{itemName}</strong>? Tindakan ini tidak dapat dibatalkan.
       </Modal.Body>
       <Modal.Footer>
         <Button variant="secondary" onClick={handleClose}>
@@ -23,4 +23,4 @@ function DeleteConfirmationModalComponent({ show, handleClose, handleConfirm, it
   );
 }
 
-export default DeleteConfirmationModalComponent;
+export default DeleteServiceModalComponent;

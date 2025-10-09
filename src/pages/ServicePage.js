@@ -1,17 +1,15 @@
 import React from 'react';
 import { Container, Row, Col, Table, Button } from 'react-bootstrap';
-import { useRoomManager } from '../hooks/useRoomManager';
+import { useServiceManager } from '../hooks/useServiceManager';
 import PaginationComponent from '../components/PaginationComponent';
-import RoomModalComponent from '../components/RoomModalComponent';
-import DeleteConfirmationModalComponent from '../components/DeleteRoomModalComponent';
+import ServiceModalComponent from '../components/ServiceModalComponent';
+import DeleteServiceModalComponent from '../components/DeleteServiceModalComponent';
 
-function RoomPage() {
+function ServicePage() {
   const {
-    rooms,
+    services,
     loading,
     error,
-    currentPage,
-    setCurrentPage,
     showModal,
     isEditMode,
     formData,
@@ -20,12 +18,12 @@ function RoomPage() {
     handleShowEditModal,
     handleCloseModal,
     handleSubmit,
-    handleDeleteRoom,
+    handleDeleteService,
     showDeleteModal,
     handleCloseDeleteModal,
     handleShowDeleteModal,
-    deletingRoom
-  } = useRoomManager();
+    deletingService
+  } = useServiceManager();
 
   if (loading && !showModal) {
     return <Container><p className="mt-4">Loading data...</p></Container>;
@@ -39,10 +37,10 @@ function RoomPage() {
     <Container>
       <div className='mt-4'>
         <Row className="align-items-center">
-          <Col><h3>Room Management</h3></Col>
+          <Col><h3>Service Management</h3></Col>
           <Col className="text-end">
             <Button variant="primary" onClick={handleShowAddModal}>
-              Add Room
+              Add Service
             </Button>
           </Col>
         </Row>
@@ -50,28 +48,28 @@ function RoomPage() {
         <Table striped bordered hover responsive className="mt-4">
           <thead className='table-dark'>
             <tr>
-              <th>Room Number</th>
-              <th>Adult Capacity</th>
-              <th>Children Capacity</th>
+              <th>Name</th>
+              <th>Description</th>
               <th>Price</th>
+              <th>isActive</th>
               <th>Actions</th>
             </tr>
           </thead>
           <tbody>
-            {rooms.content?.length === 0 ? ( // Tambahkan optional chaining (?) untuk keamanan
+            {services.content?.length === 0 ? ( // Tambahkan optional chaining (?) untuk keamanan
               <tr><td colSpan="5" className="text-center">Belum ada data kamar.</td></tr>
             ) : (
-              rooms.content?.map(room => (
-                <tr key={room.id}>
-                  <td>{room.roomNumber}</td>
-                  <td>{room.adultCapacity}</td>
-                  <td>{room.childrenCapacity}</td>
-                  <td>Rp {Number(room.roomPrice).toLocaleString('id-ID')}</td>
+              services.map(service => (
+                <tr key={service.id}>
+                  <td>{service.name}</td>
+                  <td>{service.description}</td>
+                  <td>Rp {Number(service.price).toLocaleString('id-ID')}</td>
+                  <td>{service.isActive ? 'Yes' : 'No'}</td>
                   <td>
-                    <Button variant="warning" size="sm" className="me-2" onClick={() => handleShowEditModal(room)}>
+                    <Button variant="warning" size="sm" className="me-2" onClick={() => handleShowEditModal(service)}>
                       Edit
                     </Button>
-                    <Button onClick={()=> handleShowDeleteModal(room.id)} variant="danger" size="sm">
+                    <Button onClick={()=> handleShowDeleteModal(service.id)} variant="danger" size="sm">
                       Delete
                     </Button>
                   </td>
@@ -80,31 +78,25 @@ function RoomPage() {
             )}
           </tbody>
         </Table>
-
-        <PaginationComponent 
-          currentPage={currentPage}
-          totalPages={rooms.totalPages}
-          onPageChange={setCurrentPage}
-        />
       </div>
 
-      <RoomModalComponent 
+      <ServiceModalComponent 
         show={showModal}
         handleClose={handleCloseModal}
         handleSubmit={handleSubmit}
         isEditMode={isEditMode}
-        roomData={formData}
-        setRoomData={setFormData}
+        serviceData={formData}
+        setServiceData={setFormData}
       />
 
-      <DeleteConfirmationModalComponent
+      <DeleteServiceModalComponent
           show={showDeleteModal}
           handleClose={handleCloseDeleteModal}
-          handleConfirm={handleDeleteRoom}
-          itemName={deletingRoom ? rooms.content.find(room => room.id === deletingRoom)?.roomNumber : ''}
+          handleConfirm={handleDeleteService}
+          itemName={deletingService ? services.content.find(service => service.id === deletingService)?.name : ''}
         />
     </Container>
   );
 }
 
-export default RoomPage;
+export default ServicePage;

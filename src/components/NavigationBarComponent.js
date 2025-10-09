@@ -12,6 +12,8 @@ function NavigationBarComponent() {
           <Nav className="me-auto">
             <Nav.Link as={Link} to="/rooms">Room</Nav.Link>
             <Nav.Link as={Link} to="/bookings">Booking</Nav.Link>
+            <Nav.Link as={Link} to="/services">Service</Nav.Link>
+
           </Nav>
           <Nav>
             <Nav.Link as={Link} to="/login">Login</Nav.Link>

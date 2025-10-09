@@ -1,12 +1,12 @@
 import React from 'react';
 import { Modal, Button, Form } from 'react-bootstrap';
 
-function RoomModalComponent({ show, handleClose, handleSubmit, roomData, setRoomData, isEditMode }) {
+function ServiceModalComponent({ show, handleClose, handleSubmit, serviceData, setServiceData, isEditMode }) {
 
-  // Fungsi generik untuk menangani perubahan pada semua input form
+  // Fungsi generik untuk input text/number
   const handleChange = (e) => {
     const { name, value } = e.target;
-    setRoomData(prevData => ({
+    setServiceData(prevData => ({
       ...prevData,
       [name]: value
     }));
@@ -15,39 +15,19 @@ function RoomModalComponent({ show, handleClose, handleSubmit, roomData, setRoom
   return (
     <Modal show={show} onHide={handleClose} backdrop="static" keyboard={false}>
       <Modal.Header closeButton>
-        <Modal.Title>{isEditMode ? 'Edit Room' : 'Add New Room'}</Modal.Title>
+        <Modal.Title>{isEditMode ? 'Edit Service Types' : 'Add New ServiceTypes'}</Modal.Title>
       </Modal.Header>
       <Modal.Body>
         <Form>
           <Form.Group className="mb-3">
-            <Form.Label>Room Number</Form.Label>
+            <Form.Label>Name</Form.Label>
             <Form.Control 
               type="text" 
-              name="roomNumber" 
-              value={roomData.roomNumber || ''} 
+              name="name" 
+              value={serviceData.name || ''} 
               onChange={handleChange}
-              placeholder="Enter room number" 
+              placeholder="Enter name" 
               autoFocus
-            />
-          </Form.Group>
-
-          <Form.Group className="mb-3">
-            <Form.Label>Adult Capacity</Form.Label>
-            <Form.Control 
-              type="number" 
-              name="adultCapacity" 
-              value={roomData.adultCapacity || 0} 
-              onChange={handleChange}
-            />
-          </Form.Group>
-
-          <Form.Group className="mb-3">
-            <Form.Label>Children Capacity</Form.Label>
-            <Form.Control 
-              type="number" 
-              name="childrenCapacity" 
-              value={roomData.childrenCapacity || 0} 
-              onChange={handleChange}
             />
           </Form.Group>
 
@@ -55,10 +35,31 @@ function RoomModalComponent({ show, handleClose, handleSubmit, roomData, setRoom
             <Form.Label>Price</Form.Label>
             <Form.Control 
               type="number" 
-              name="roomPrice" 
-              value={roomData.roomPrice || 0} 
+              name="price" 
+              value={serviceData.price || 0} 
               onChange={handleChange}
-              placeholder="Enter price per night" 
+            />
+          </Form.Group>
+
+          <Form.Group className="mb-3">
+            <Form.Label>Description</Form.Label>
+            <Form.Control 
+              as="textarea" 
+              name="description" 
+              value={serviceData.description || ''} 
+              onChange={handleChange}
+            />
+          </Form.Group>
+
+          <Form.Group className="mb-3">
+            <Form.Check
+              type="checkbox"
+              name="isActive"
+              checked={serviceData.isActive || false}
+              onChange={(e) => setServiceData(prevData => ({
+                ...prevData,
+                isActive: e.target.checked
+              }))}
             />
           </Form.Group>
         </Form>
@@ -75,4 +76,4 @@ function RoomModalComponent({ show, handleClose, handleSubmit, roomData, setRoom
   );
 }
 
-export default RoomModalComponent;
+export default ServiceModalComponent;

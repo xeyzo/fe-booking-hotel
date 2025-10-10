@@ -1,12 +1,14 @@
 import React from "react";
 import { useRoomDetailManager } from "../hooks/useRoomDetailManager";
-import { Card, Col, Row, Container, Button } from "react-bootstrap";
+import { useAmenityManager } from "../hooks/useAmenityManager";
+import { Card, Col, Row, Container, Button, Table } from "react-bootstrap";
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { faUser, faChildren } from '@fortawesome/free-solid-svg-icons';
-import AddingModalAmenityComponent from "../components/room-detail-components/AddingModalAmenityComponent";
+import AddingAmenityModalComponent from "../components/room-detail-components/AddingAmenityModalComponent";
 
 function RoomDetailPage() {
-  const { roomDetail, showModal, handleCloseModal, handleShowModal } = useRoomDetailManager();
+  const { roomDetail, showModal, handleCloseModal, handleShowModal, selectedAmenities, handleSubmit, formData, setFormData, handleDelete} = useRoomDetailManager();
+  const { amenities } = useAmenityManager();
   return (
     <Container className="mt-4">
     <Card>
@@ -35,11 +37,42 @@ function RoomDetailPage() {
     <div className="mt-3 fw-bold" style={{ textAlign: 'end' }}> 
         <Button variant="primary" onClick={handleShowModal} className="mt-3">Add Amenity in Room</Button>
     </div>
-    <AddingModalAmenityComponent 
+
+    <Table striped bordered hover responsive className="mt-4">
+          <thead className='table-dark'>
+            <tr>
+              <th>Name</th>
+              <th>Description</th>
+              <th>Actions</th>
+            </tr>
+          </thead>
+          <tbody>
+            {selectedAmenities.content?.length === 0 ? (
+              <tr><td colSpan="5" className="text-center">Belum ada data kamar.</td></tr>
+            ) : (
+              selectedAmenities.map(amenity => (
+                <tr key={amenity.id}>
+                  <td>{amenity.amenityTypeName}</td>
+                  <td>{amenity.notes}</td>
+                  <td>
+                    <Button variant="danger" size="sm" onClick={() => handleDelete(amenity.id)}>
+                      Delete
+                    </Button>
+                  </td>
+                </tr>
+              ))
+            )}
+          </tbody>
+        </Table>
+
+    <AddingAmenityModalComponent 
         show={showModal}
         handleClose={handleCloseModal}
-        roomDetail={roomDetail}
         handleShowModal={handleShowModal}
+        amenityData={amenities}
+        handleSave={handleSubmit}
+        formData={formData}
+        setFormData={setFormData}
     />
     </Container>
   );

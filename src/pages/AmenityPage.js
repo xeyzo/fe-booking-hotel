@@ -90,7 +90,7 @@ function AmenityPage() {
           show={showDeleteModal}
           handleClose={handleCloseDeleteModal}
           handleConfirm={handleDeleteAmenity}
-          itemName={deletingAmenity ? amenities.content.find(amenity => amenity.id === deletingAmenity)?.name : ''}
+          itemName={deletingAmenity ? amenities.find(amenity => amenity.id === deletingAmenity)?.name : ''}
         />
     </Container>
   );

@@ -2,7 +2,7 @@ import React from 'react';
 import { Container, Row, Col, Table, Button } from 'react-bootstrap';
 import { useServiceManager } from '../hooks/useServiceManager';
 import ServiceModalComponent from '../components/service-components/ServiceModalComponent';
-import DeleteServiceModalComponent from '../components/service-components/DeleteServiceModalComponent';
+import DeleteBookingModalComponent from '../components/booking-components/DeleteBookingModalComponent';
 
 function ServicePage() {
   const {
@@ -55,7 +55,7 @@ function ServicePage() {
             </tr>
           </thead>
           <tbody>
-            {services.content?.length === 0 ? ( // Tambahkan optional chaining (?) untuk keamanan
+            {services.content?.length === 0 ? (
               <tr><td colSpan="5" className="text-center">Belum ada data kamar.</td></tr>
             ) : (
               services.map(service => (
@@ -88,12 +88,12 @@ function ServicePage() {
         setServiceData={setFormData}
       />
 
-      <DeleteServiceModalComponent
+      <DeleteBookingModalComponent
           show={showDeleteModal}
           handleClose={handleCloseDeleteModal}
           handleConfirm={handleDeleteService}
-          itemName={deletingService ? services.content.find(service => service.id === deletingService)?.name : ''}
-        />
+          itemName={deletingService ? services.find(service => service.id === deletingService)?.name : ''}
+      />
     </Container>
   );
 }

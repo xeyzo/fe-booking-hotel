@@ -59,7 +59,7 @@ function RoomPage() {
             </tr>
           </thead>
           <tbody>
-            {rooms.content?.length === 0 ? ( // Tambahkan optional chaining (?) untuk keamanan
+            {rooms.content?.length === 0 ? (
               <tr><td colSpan="5" className="text-center">Belum ada data kamar.</td></tr>
             ) : (
               rooms.content?.map(room => (

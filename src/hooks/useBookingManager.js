@@ -18,20 +18,16 @@ export function useBookingManager() {
   const [bookings, setBookings] = useState([]);
   const [loading, setLoading] = useState(true);
   const [error, setError] = useState(null);
-
   const [showModal, setShowModal] = useState(false);
   const [isEditMode, setIsEditMode] = useState(false);
   const [formData, setFormData] = useState(initialFormState);
   const [editingBookingId, setEditingBookingId] = useState(null);
-  
   const [showDeleteModal, setShowDeleteModal] = useState(false);
   const [deletingBooking, setDeletingBooking] = useState(null);
-
   const [showCancelModal, setShowCancelModal] = useState(false);
   const [cancellingBooking, setCancellingBooking] = useState(null);
-
-  const [availableRooms, setAvailableRooms] = useState(null); // Diubah jadi null untuk pengecekan lebih mudah
-
+  const [availableRooms, setAvailableRooms] = useState(null);
+  
   const fetchBookings = useCallback(async () => {
     setLoading(true);
     try {
@@ -54,13 +50,13 @@ export function useBookingManager() {
     setFormData(initialFormState);
     setEditingBookingId(null);
     setIsEditMode(false);
-    setAvailableRooms(null); // Reset daftar kamar
+    setAvailableRooms(null);
   };
 
   const handleShowAddModal = () => {
     setIsEditMode(false);
     setFormData(initialFormState);
-    setAvailableRooms(null); // Reset daftar kamar
+    setAvailableRooms(null); 
     setShowModal(true);
   };
 
@@ -92,22 +88,19 @@ export function useBookingManager() {
       setAvailableRooms(response.data.data || null);
     } catch (error) {
       console.error("Failed to get available rooms:", error.response?.data || error.message);
+      console.log(error.response?.data?.errors?.fieldErrors?.checkInDate || error.response?.data?.errors?.fieldErrors?.checkInDate)
       setAvailableRooms(null);
     }
   };
 
   const handleSubmit = async () => {
-    // Perbaikan: Hindari mutasi state langsung dan pastikan roomId ada
     if (!formData.roomId && (!availableRooms || !availableRooms.id)) {
         console.error("No room selected or found.");
-        // Anda bisa menambahkan notifikasi error untuk user di sini
         return;
     }
 
-    // Buat payload baru untuk menghindari mutasi
     const finalFormData = {
         ...formData,
-        // Gunakan roomId dari availableRooms jika ada, jika tidak, gunakan yang sudah ada di form (untuk edit)
         roomId: availableRooms ? Number(availableRooms.id) : formData.roomId
     };
 
@@ -154,9 +147,8 @@ export function useBookingManager() {
     setCancellingBooking(null);
   }
 
-  // Perbaikan: Gunakan state `cancellingBooking`, tidak perlu parameter
   const handleCancelBooking = async () => {
-    if (!cancellingBooking) return; // Pengaman
+    if (!cancellingBooking) return;
     const data = {
       bookingStatus: 'CANCELED'
     }

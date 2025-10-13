@@ -11,21 +11,21 @@ const initialFormState = {
 export function useRoomManager() {
   const API_BASE_URL = process.env.API_BASE_URL || 'http://localhost:4000/api';
 
-  // --- State dari useRooms ---
   const [rooms, setRooms] = useState({ content: [], totalPages: 0 });
   const [loading, setLoading] = useState(true);
   const [error, setError] = useState(null);
   const [currentPage, setCurrentPage] = useState(0);
 
-  // --- State dari useRoomForm ---
   const [showModal, setShowModal] = useState(false);
   const [isEditMode, setIsEditMode] = useState(false);
   const [formData, setFormData] = useState(initialFormState);
   const [editingRoomId, setEditingRoomId] = useState(null);
   const [showDeleteModal, setShowDeleteModal] = useState(false);
   const [deletingRoom, setDeletingRoom] = useState(null)
+  const [formError, setFormError] = useState([]);
+  const [transactionError, setTransactionError] = useState('');
 
-  // --- Fungsi dari useRooms ---
+
   const fetchRooms = useCallback( async() => {
     setLoading(true);
     try {
@@ -43,12 +43,13 @@ export function useRoomManager() {
     fetchRooms();
   }, [currentPage, fetchRooms]);
 
-  // --- Fungsi dari useRoomForm ---
   const handleCloseModal = () => {
     setShowModal(false);
     setFormData(initialFormState);
     setEditingRoomId(null);
     setIsEditMode(false);
+    setFormError([]);
+    setTransactionError('');
   };
 
   const handleShowAddModal = () => {
@@ -99,13 +100,14 @@ export function useRoomManager() {
         await axios.post(`${API_BASE_URL}/rooms`, formData);
       }
       handleCloseModal();
-      fetchRooms(); // Langsung panggil fetchRooms karena berada dalam hook yang sama
+      fetchRooms();
     } catch (error) {
       console.error("Gagal menyimpan data:", error);
+      setFormError(error?.response?.data?.errors?.fieldErrors)
+      setTransactionError(error?.response?.data?.message)
     }
   };
 
-  // Kembalikan semua state dan fungsi yang dibutuhkan oleh UI
   return {
     rooms,
     loading,
@@ -115,6 +117,7 @@ export function useRoomManager() {
     showModal,
     isEditMode,
     formData,
+    formError,
     setFormData,
     handleShowAddModal,
     handleShowEditModal,
@@ -124,6 +127,7 @@ export function useRoomManager() {
     showDeleteModal,
     deletingRoom,
     handleCloseDeleteModal,
-    handleShowDeleteModal
+    handleShowDeleteModal,
+    transactionError
   };
 }

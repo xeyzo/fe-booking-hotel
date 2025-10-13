@@ -25,7 +25,9 @@ function RoomPage() {
     showDeleteModal,
     handleCloseDeleteModal,
     handleShowDeleteModal,
-    deletingRoom
+    deletingRoom,
+    formError,
+    transactionError
   } = useRoomManager();
 
   if (loading && !showModal) {
@@ -35,6 +37,7 @@ function RoomPage() {
   if (error) {
     return <Container><p className="mt-4 text-danger">Error: {error}</p></Container>;
   }
+
 
   return (
     <Container>
@@ -102,6 +105,8 @@ function RoomPage() {
         isEditMode={isEditMode}
         roomData={formData}
         setRoomData={setFormData}
+        error={formError}
+        transactionError={transactionError}
       />
 
       <DeleteConfirmationModalComponent
@@ -109,7 +114,7 @@ function RoomPage() {
           handleClose={handleCloseDeleteModal}
           handleConfirm={handleDeleteRoom}
           itemName={deletingRoom ? rooms.content.find(room => room.id === deletingRoom)?.roomNumber : ''}
-        />
+      />
     </Container>
   );
 }

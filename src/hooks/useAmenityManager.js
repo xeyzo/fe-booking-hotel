@@ -10,12 +10,10 @@ const initialFormState = {
 export function useAmenityManager() {
   const API_BASE_URL = process.env.API_BASE_URL || 'http://localhost:4000/api';
 
-  // --- State dari useRooms ---
   const [amenities, setAmenities] = useState([]);
   const [loading, setLoading] = useState(true);
   const [error, setError] = useState(null);
 
-  // --- State dari useRoomForm ---
   const [showModal, setShowModal] = useState(false);
   const [isEditMode, setIsEditMode] = useState(false);
   const [formData, setFormData] = useState(initialFormState);
@@ -23,7 +21,6 @@ export function useAmenityManager() {
   const [showDeleteModal, setShowDeleteModal] = useState(false);
   const [deletingAmenity, setDeletingAmenity] = useState(null)
 
-  // --- Fungsi dari useRooms ---
   const fetchAmenities = useCallback( async() => {
     setLoading(true);
     try {
@@ -95,13 +92,12 @@ export function useAmenityManager() {
         await axios.post(`${API_BASE_URL}/amenity-types`, formData);
       }
       handleCloseModal();
-      fetchAmenities(); // Langsung panggil fetchRooms karena berada dalam hook yang sama
+      fetchAmenities(); 
     } catch (error) {
       console.error("Gagal menyimpan data:", error);
     }
   };
 
-  // Kembalikan semua state dan fungsi yang dibutuhkan oleh UI
   return {
     amenities,
     loading,

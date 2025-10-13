@@ -25,21 +25,18 @@ export function useHomeManager() {
         fetchBookings();
     }, [fetchBookings]);
 
-    // --- PERBAIKAN DI SINI ---
     const handleChangeStatusBooking = async (status, id) => {
         const data = {
             bookingStatus: status
         };
         try {
-            // Tunggu sampai server selesai mengubah data
             await axios.patch(`${API_BASE_URL}/bookings/${id}`, data);
-            
-            // Setelah itu, baru ambil data terbaru
             fetchBookings();
         } catch (error) {
             console.error("Failed to change booking status:", error);
         }
     };
+    
 
     return {
         bookings,

@@ -38,7 +38,6 @@ function HomePage() {
   return (
     <Container>
       <Row className="mt-4">
-        {/* Kolom untuk Check-in */}
         <Col md={6} className="mb-4">
           <Card>
             <Card.Header className='fw-bold bg-light'>
@@ -57,7 +56,6 @@ function HomePage() {
                       </Col>
                       <Col md={4} className='text-end'>
                         <div className='m-3'>
-                          {/* PERBAIKAN: Panggil fungsi di dalam onClick */}
                           <Button 
                             variant="warning" 
                             onClick={() => handleChangeStatusBooking('CHECKED_IN', booking.id)}
@@ -95,7 +93,6 @@ function HomePage() {
                       </Col>
                       <Col md={4} className='text-end'>
                         <div className='m-3'>
-                          {/* PERBAIKAN: Panggil fungsi di dalam onClick */}
                           <Button 
                             variant="danger"
                             onClick={() => handleChangeStatusBooking('CHECKED_OUT', booking.id)}

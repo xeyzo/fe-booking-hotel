@@ -54,7 +54,7 @@ function AmenityPage() {
             </tr>
           </thead>
           <tbody>
-            {amenities.content?.length === 0 ? ( // Tambahkan optional chaining (?) untuk keamanan
+            {amenities.content?.length === 0 ? ( 
               <tr><td colSpan="5" className="text-center">Belum ada data kamar.</td></tr>
             ) : (
               amenities.map(amenity => (

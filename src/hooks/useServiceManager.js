@@ -11,12 +11,10 @@ const initialFormState = {
 export function useServiceManager() {
   const API_BASE_URL = process.env.API_BASE_URL || 'http://localhost:4000/api';
 
-  // --- State dari useRooms ---
   const [services, setServices] = useState([]);
   const [loading, setLoading] = useState(true);
   const [error, setError] = useState(null);
 
-  // --- State dari useRoomForm ---
   const [showModal, setShowModal] = useState(false);
   const [isEditMode, setIsEditMode] = useState(false);
   const [formData, setFormData] = useState(initialFormState);
@@ -24,7 +22,6 @@ export function useServiceManager() {
   const [showDeleteModal, setShowDeleteModal] = useState(false);
   const [deletingService, setDeletingService] = useState(null)
 
-  // --- Fungsi dari useRooms ---
   const fetchServices = useCallback( async() => {
     setLoading(true);
     try {
@@ -42,7 +39,6 @@ export function useServiceManager() {
     fetchServices();
   }, [fetchServices]);
 
-  // --- Fungsi dari useRoomForm ---
   const handleCloseModal = () => {
     setShowModal(false);
     setFormData(initialFormState);
@@ -97,13 +93,12 @@ export function useServiceManager() {
         await axios.post(`${API_BASE_URL}/service-types`, formData);
       }
       handleCloseModal();
-      fetchServices(); // Langsung panggil fetchRooms karena berada dalam hook yang sama
+      fetchServices();
     } catch (error) {
       console.error("Gagal menyimpan data:", error);
     }
   };
 
-  // Kembalikan semua state dan fungsi yang dibutuhkan oleh UI
   return {
     services,
     loading,

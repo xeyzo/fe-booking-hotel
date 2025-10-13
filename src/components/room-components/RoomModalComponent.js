@@ -1,9 +1,8 @@
 import React from 'react';
-import { Modal, Button, Form } from 'react-bootstrap';
+import { Modal, Button, Form, Alert } from 'react-bootstrap';
 
-function RoomModalComponent({ show, handleClose, handleSubmit, roomData, setRoomData, isEditMode }) {
+function RoomModalComponent({ show, handleClose, handleSubmit, roomData, setRoomData, isEditMode, error, transactionError }) {
 
-  // Fungsi generik untuk menangani perubahan pada semua input form
   const handleChange = (e) => {
     const { name, value } = e.target;
     setRoomData(prevData => ({
@@ -18,6 +17,7 @@ function RoomModalComponent({ show, handleClose, handleSubmit, roomData, setRoom
         <Modal.Title>{isEditMode ? 'Edit Room' : 'Add New Room'}</Modal.Title>
       </Modal.Header>
       <Modal.Body>
+        {transactionError && <Alert variant="danger">{transactionError}</Alert>}
         <Form>
           <Form.Group className="mb-3">
             <Form.Label>Room Number</Form.Label>
@@ -28,7 +28,11 @@ function RoomModalComponent({ show, handleClose, handleSubmit, roomData, setRoom
               onChange={handleChange}
               placeholder="Enter room number" 
               autoFocus
+              isInvalid={!!error?.roomNumber}
             />
+            <Form.Control.Feedback type="invalid">
+              {error?.roomNumber}
+            </Form.Control.Feedback>
           </Form.Group>
 
           <Form.Group className="mb-3">
@@ -38,7 +42,11 @@ function RoomModalComponent({ show, handleClose, handleSubmit, roomData, setRoom
               name="adultCapacity" 
               value={roomData.adultCapacity || 0} 
               onChange={handleChange}
+              isInvalid={!!error?.adultCapacity}
             />
+            <Form.Control.Feedback type="invalid">
+              {error?.adultCapacity}
+            </Form.Control.Feedback>
           </Form.Group>
 
           <Form.Group className="mb-3">
@@ -48,7 +56,11 @@ function RoomModalComponent({ show, handleClose, handleSubmit, roomData, setRoom
               name="childrenCapacity" 
               value={roomData.childrenCapacity || 0} 
               onChange={handleChange}
+              isInvalid={!!error?.childrenCapacity}
             />
+            <Form.Control.Feedback type="invalid">
+              {error?.childrenCapacity}
+            </Form.Control.Feedback>
           </Form.Group>
 
           <Form.Group className="mb-3">
@@ -59,7 +71,11 @@ function RoomModalComponent({ show, handleClose, handleSubmit, roomData, setRoom
               value={roomData.roomPrice || 0} 
               onChange={handleChange}
               placeholder="Enter price per night" 
+              isInvalid={!!error?.roomPrice}
             />
+            <Form.Control.Feedback type="invalid">
+              {error?.roomPrice}
+            </Form.Control.Feedback>
           </Form.Group>
         </Form>
       </Modal.Body>

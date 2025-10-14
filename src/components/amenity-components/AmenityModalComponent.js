@@ -1,7 +1,7 @@
 import React from 'react';
-import { Modal, Button, Form } from 'react-bootstrap';
+import { Modal, Button, Form, Alert } from 'react-bootstrap';
 
-function AmenityModalComponent({ show, handleClose, handleSubmit, amenityData, setAmenityData, isEditMode }) {
+function AmenityModalComponent({ show, handleClose, handleSubmit, amenityData, setAmenityData, isEditMode, formError, transactionError}) {
 
   // Fungsi generik untuk input text/number
   const handleChange = (e) => {
@@ -17,6 +17,7 @@ function AmenityModalComponent({ show, handleClose, handleSubmit, amenityData, s
       <Modal.Header closeButton>
         <Modal.Title>{isEditMode ? 'Edit Amenity Types' : 'Add New AmenityTypes'}</Modal.Title>
       </Modal.Header>
+          {transactionError && <Alert variant="danger">{transactionError}</Alert>}
       <Modal.Body>
         <Form>
           <Form.Group className="mb-3">
@@ -28,7 +29,11 @@ function AmenityModalComponent({ show, handleClose, handleSubmit, amenityData, s
               onChange={handleChange}
               placeholder="Enter name" 
               autoFocus
+              isInvalid={!!formError?.name}
             />
+            <Form.Control.Feedback type="invalid">
+              {formError?.name}
+            </Form.Control.Feedback>
           </Form.Group>
 
           <Form.Group className="mb-3">
@@ -38,6 +43,7 @@ function AmenityModalComponent({ show, handleClose, handleSubmit, amenityData, s
               name="description" 
               value={amenityData.description || ''} 
               onChange={handleChange}
+              placeholder="Enter description"
             />
           </Form.Group>
 

@@ -91,6 +91,6 @@ export function useRoomDetailManager() {
             setFormData,
             handleCloseModal,
             handleShowModal,
-            handleSubmit
+            handleSubmit,
         };
     }

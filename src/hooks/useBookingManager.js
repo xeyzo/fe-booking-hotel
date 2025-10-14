@@ -26,7 +26,12 @@ export function useBookingManager() {
   const [deletingBooking, setDeletingBooking] = useState(null);
   const [showCancelModal, setShowCancelModal] = useState(false);
   const [cancellingBooking, setCancellingBooking] = useState(null);
+  const [showCheckoutModal, setShowCheckoutModal] = useState(false);
+  const [checkoutBooking, setCheckoutBooking] = useState(null);
   const [availableRooms, setAvailableRooms] = useState(null);
+  const [formError, setFormError] = useState([]);
+  const [transactionError, setTransactionError] = useState('');
+  
   
   const fetchBookings = useCallback(async () => {
     setLoading(true);
@@ -88,7 +93,8 @@ export function useBookingManager() {
       setAvailableRooms(response.data.data || null);
     } catch (error) {
       console.error("Failed to get available rooms:", error.response?.data || error.message);
-      console.log(error.response?.data?.errors?.fieldErrors?.checkInDate || error.response?.data?.errors?.fieldErrors?.checkInDate)
+      setFormError(error?.response?.data?.errors?.fieldErrors)
+      setTransactionError(error?.response?.data?.message)
       setAvailableRooms(null);
     }
   };
@@ -114,6 +120,8 @@ export function useBookingManager() {
       fetchBookings();
     } catch (error) {
       console.error("Failed to save data:", error.response?.data || error.message);
+      setFormError(error?.response?.data?.errors?.fieldErrors)
+      setTransactionError(error?.response?.data?.message)
     }
   };
   
@@ -147,8 +155,32 @@ export function useBookingManager() {
     setCancellingBooking(null);
   }
 
+  const handleShowCheckoutModal = (bookingId) => {
+    setCheckoutBooking(bookingId);
+    setShowCheckoutModal(true);
+  }
+
+  const handleCloseCheckoutModal = () => {
+    setShowCheckoutModal(false);
+    setCheckoutBooking(null);
+  }
+
+  const handleCheckoutBooking = async () => {
+    if (!checkoutBooking) return;
+    const data = {
+      bookingStatus: 'CHECKED_OUT'
+    }
+    try {
+      await axios.patch(`${API_BASE_URL}/bookings/${checkoutBooking}`, data);
+      fetchBookings();
+      handleCloseCheckoutModal();
+    } catch (error) {
+      console.error("Failed to checkout booking:", error);
+    }
+  };
+
   const handleCancelBooking = async () => {
-    if (!cancellingBooking) return;
+    if (!checkoutBooking) return;
     const data = {
       bookingStatus: 'CANCELED'
     }
@@ -166,6 +198,8 @@ export function useBookingManager() {
     handleShowAddModal, handleShowEditModal, handleCloseModal, handleSubmit,
     showDeleteModal, deletingBooking, handleCloseDeleteModal, handleShowDeleteModal, handleDeleteBooking,
     availableRooms, handleGetAvailableRooms, 
-    showCancelModal, cancellingBooking, handleCloseCancelModal, handleShowCancelModal, handleCancelBooking
+    showCancelModal, cancellingBooking, handleCloseCancelModal, handleShowCancelModal, handleCancelBooking,
+    showCheckoutModal, checkoutBooking, handleCloseCheckoutModal, handleShowCheckoutModal, handleCheckoutBooking,
+    formError, transactionError
   };
 }

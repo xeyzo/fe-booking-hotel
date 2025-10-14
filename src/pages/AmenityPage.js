@@ -21,7 +21,9 @@ function AmenityPage() {
     showDeleteModal,
     handleCloseDeleteModal,
     handleShowDeleteModal,
-    deletingAmenity
+    deletingAmenity,
+    formError,
+    transactionError
   } = useAmenityManager();
 
   if (loading && !showModal) {
@@ -84,6 +86,8 @@ function AmenityPage() {
         isEditMode={isEditMode}
         amenityData={formData}
         setAmenityData={setFormData}
+        formError={formError}
+        transactionError={transactionError}
       />
 
       <DeleteAmenityModalComponent

@@ -4,6 +4,7 @@ import { useBookingManager } from '../hooks/useBookingManager';
 import { AddBookingModalComponent } from '../components/booking-components/AddBookingModalComponent';
 import DeleteBookingModalComponent from '../components/booking-components/DeleteBookingModalComponent';
 import CancelBookingModalComponent from '../components/booking-components/CancelBookingModalComponent';
+import CheckoutBookingModalComponent from '../components/booking-components/CheckoutBookingModalComponent';
 
 function BookingPage() {
   const {
@@ -12,7 +13,9 @@ function BookingPage() {
     handleShowAddModal, handleCloseModal, handleSubmit,
     showDeleteModal, deletingBooking, handleCloseDeleteModal, handleShowDeleteModal, handleDeleteBooking,
     availableRooms, handleGetAvailableRooms, 
-    showCancelModal, cancellingBooking, handleCloseCancelModal, handleShowCancelModal, handleCancelBooking
+    showCancelModal, cancellingBooking, handleCloseCancelModal, handleShowCancelModal, handleCancelBooking,
+    showCheckoutModal, checkoutBooking, handleCloseCheckoutModal, handleShowCheckoutModal, handleCheckoutBooking,
+    formError, transactionError
   } = useBookingManager();
 
   if (loading && !showModal && !showDeleteModal && !showCancelModal) {
@@ -85,13 +88,22 @@ function BookingPage() {
                         Cancel
                       </Button>
                     )}
-                    {(booking.bookingStatus === 'CHECKED_OUT' || booking.bookingStatus === 'CANCELED') && (
+                    {booking.bookingStatus === 'CHECKED_OUT' && (
                       <Button 
                         onClick={() => handleShowDeleteModal(booking.id)} 
                         variant="danger" 
                         size="sm"
                       >
                         Delete
+                      </Button>
+                    )}
+                    {booking.bookingStatus === 'CHECKED_IN' && (
+                      <Button 
+                        onClick={() => handleShowCheckoutModal(booking.id)} 
+                        variant="danger" 
+                        size="sm"
+                      >
+                        Check out
                       </Button>
                     )}
                   </td>
@@ -111,6 +123,8 @@ function BookingPage() {
         setBookingData={setFormData}
         handleGetAvailableRooms={handleGetAvailableRooms}
         availableRooms={availableRooms}
+        error={formError}
+        transactionError={transactionError}
       />
       
       <DeleteBookingModalComponent
@@ -125,6 +139,13 @@ function BookingPage() {
         handleClose={handleCloseCancelModal}
         handleCancelBooking={handleCancelBooking}
         itemName={findBookingGuestName(cancellingBooking)}
+      />
+
+      <CheckoutBookingModalComponent 
+        show={showCheckoutModal}
+        handleClose={handleCloseCheckoutModal}
+        handleCheckoutBooking={handleCheckoutBooking}
+        itemName={findBookingGuestName(checkoutBooking)}
       />
     </Container>
   );

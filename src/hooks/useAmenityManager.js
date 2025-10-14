@@ -19,7 +19,9 @@ export function useAmenityManager() {
   const [formData, setFormData] = useState(initialFormState);
   const [editingAmenityId, setEditingAmenityId] = useState(null);
   const [showDeleteModal, setShowDeleteModal] = useState(false);
-  const [deletingAmenity, setDeletingAmenity] = useState(null)
+  const [deletingAmenity, setDeletingAmenity] = useState(null);
+  const [formError, setFormError] = useState([]);
+  const [transactionError, setTransactionError] = useState('');
 
   const fetchAmenities = useCallback( async() => {
     setLoading(true);
@@ -38,7 +40,6 @@ export function useAmenityManager() {
     fetchAmenities();
   }, [fetchAmenities]);
 
-  // --- Fungsi dari useRoomForm ---
   const handleCloseModal = () => {
     setShowModal(false);
     setFormData(initialFormState);
@@ -95,6 +96,8 @@ export function useAmenityManager() {
       fetchAmenities(); 
     } catch (error) {
       console.error("Gagal menyimpan data:", error);
+      setFormError(error?.response?.data?.errors?.fieldErrors)
+      setTransactionError(error?.response?.data?.message)
     }
   };
 
@@ -114,6 +117,8 @@ export function useAmenityManager() {
     showDeleteModal,
     deletingAmenity,
     handleCloseDeleteModal,
-    handleShowDeleteModal
+    handleShowDeleteModal,
+    formError,
+    transactionError
   };
 }

@@ -1,7 +1,7 @@
 import React from 'react';
-import { Modal, Button, Form } from 'react-bootstrap';
+import { Modal, Button, Form, Alert } from 'react-bootstrap';
 
-function ServiceModalComponent({ show, handleClose, handleSubmit, serviceData, setServiceData, isEditMode }) {
+function ServiceModalComponent({ show, handleClose, handleSubmit, serviceData, setServiceData, isEditMode, formError, transactionError}) {
 
   // Fungsi generik untuk input text/number
   const handleChange = (e) => {
@@ -17,6 +17,7 @@ function ServiceModalComponent({ show, handleClose, handleSubmit, serviceData, s
       <Modal.Header closeButton>
         <Modal.Title>{isEditMode ? 'Edit Service Types' : 'Add New ServiceTypes'}</Modal.Title>
       </Modal.Header>
+        {transactionError && <Alert variant="danger">{transactionError}</Alert>}
       <Modal.Body>
         <Form>
           <Form.Group className="mb-3">
@@ -28,7 +29,11 @@ function ServiceModalComponent({ show, handleClose, handleSubmit, serviceData, s
               onChange={handleChange}
               placeholder="Enter name" 
               autoFocus
+              isInvalid={!!formError?.name}
             />
+            <Form.Control.Feedback type="invalid">
+              {formError?.name}
+            </Form.Control.Feedback>
           </Form.Group>
 
           <Form.Group className="mb-3">
@@ -38,7 +43,11 @@ function ServiceModalComponent({ show, handleClose, handleSubmit, serviceData, s
               name="price" 
               value={serviceData.price || 0} 
               onChange={handleChange}
+              isInvalid={!!formError?.price}    
             />
+            <Form.Control.Feedback type="invalid">
+              {formError?.price}
+            </Form.Control.Feedback>
           </Form.Group>
 
           <Form.Group className="mb-3">
@@ -48,6 +57,7 @@ function ServiceModalComponent({ show, handleClose, handleSubmit, serviceData, s
               name="description" 
               value={serviceData.description || ''} 
               onChange={handleChange}
+              placeholder="Enter description"
             />
           </Form.Group>
 

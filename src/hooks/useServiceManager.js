@@ -20,7 +20,9 @@ export function useServiceManager() {
   const [formData, setFormData] = useState(initialFormState);
   const [editingServiceId, setEditingServiceId] = useState(null);
   const [showDeleteModal, setShowDeleteModal] = useState(false);
-  const [deletingService, setDeletingService] = useState(null)
+  const [deletingService, setDeletingService] = useState(null);
+  const [formError, setFormError] = useState([]);
+  const [transactionError, setTransactionError] = useState('');
 
   const fetchServices = useCallback( async() => {
     setLoading(true);
@@ -96,6 +98,8 @@ export function useServiceManager() {
       fetchServices();
     } catch (error) {
       console.error("Gagal menyimpan data:", error);
+      setFormError(error?.response?.data?.errors?.fieldErrors)
+      setTransactionError(error?.response?.data?.message)
     }
   };
 
@@ -115,6 +119,8 @@ export function useServiceManager() {
     showDeleteModal,
     deletingService,
     handleCloseDeleteModal,
-    handleShowDeleteModal
+    handleShowDeleteModal,
+    formError,
+    transactionError
   };
 }

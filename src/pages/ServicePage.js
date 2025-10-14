@@ -21,7 +21,9 @@ function ServicePage() {
     showDeleteModal,
     handleCloseDeleteModal,
     handleShowDeleteModal,
-    deletingService
+    deletingService,
+    formError,
+    transactionError
   } = useServiceManager();
 
   if (loading && !showModal) {
@@ -86,6 +88,8 @@ function ServicePage() {
         isEditMode={isEditMode}
         serviceData={formData}
         setServiceData={setFormData}
+        formError={formError}
+        transactionError={transactionError}
       />
 
       <DeleteBookingModalComponent

@@ -17,8 +17,8 @@ function ServiceModalComponent({ show, handleClose, handleSubmit, serviceData, s
       <Modal.Header closeButton>
         <Modal.Title>{isEditMode ? 'Edit Service Types' : 'Add New ServiceTypes'}</Modal.Title>
       </Modal.Header>
-        {transactionError && <Alert variant="danger">{transactionError}</Alert>}
       <Modal.Body>
+          {transactionError && <Alert variant="danger">{transactionError}</Alert>}
         <Form>
           <Form.Group className="mb-3">
             <Form.Label>Name</Form.Label>

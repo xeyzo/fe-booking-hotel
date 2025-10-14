@@ -17,8 +17,8 @@ function AmenityModalComponent({ show, handleClose, handleSubmit, amenityData, s
       <Modal.Header closeButton>
         <Modal.Title>{isEditMode ? 'Edit Amenity Types' : 'Add New AmenityTypes'}</Modal.Title>
       </Modal.Header>
-          {transactionError && <Alert variant="danger">{transactionError}</Alert>}
       <Modal.Body>
+          {transactionError && <Alert variant="danger">{transactionError}</Alert>}
         <Form>
           <Form.Group className="mb-3">
             <Form.Label>Name</Form.Label>

@@ -88,7 +88,7 @@ function BookingPage() {
                         Cancel
                       </Button>
                     )}
-                    {booking.bookingStatus === 'CHECKED_OUT' && (
+                    {(booking.bookingStatus === 'CHECKED_OUT' || booking.bookingStatus === 'CANCELED' )&& (
                       <Button 
                         onClick={() => handleShowDeleteModal(booking.id)} 
                         variant="danger" 

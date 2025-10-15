@@ -180,7 +180,7 @@ export function useBookingManager() {
   };
 
   const handleCancelBooking = async () => {
-    if (!checkoutBooking) return;
+    if (!cancellingBooking) return;
     const data = {
       bookingStatus: 'CANCELED'
     }

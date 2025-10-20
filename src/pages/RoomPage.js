@@ -4,7 +4,6 @@ import { useRoomManager } from '../hooks/useRoomManager';
 import PaginationComponent from '../components/common-components/PaginationComponent';
 import RoomModalComponent from '../components/room-components/RoomModalComponent';
 import DeleteConfirmationModalComponent from '../components/room-components/DeleteRoomModalComponent';
-import {Link} from 'react-router-dom';
 
 function RoomPage() {
   const {
@@ -69,9 +68,9 @@ function RoomPage() {
                 <tr key={room.id}>
                   <td>
                     <li>
-                      <Link to={`/rooms/${room.id}`} className="text-decoration-none">
+                      <a href={`/rooms/${room.id}`} className="text-decoration-none">
                         {room.roomNumber}
-                      </Link>
+                      </a>
                     </li>         
                   </td>
                   <td>{room.adultCapacity}</td>

@@ -8,7 +8,7 @@ function CancelBookingModalComponent({ show, handleClose, handleCancelBooking, i
         <Modal.Title>Konfirmasi Pembatalan</Modal.Title>
       </Modal.Header>
       <Modal.Body>
-        Apakah Anda yakin ingin cancel booking untuk tamu <strong>{itemName}</strong>? Tindakan ini tidak dapat dibatalkan.
+        Apakah Anda yakin ingin membatalkan pesanan untuk tamu <strong>{itemName}</strong>? Tindakan ini tidak dapat dibatalkan.
       </Modal.Body>
       <Modal.Footer>
         <Button variant="secondary" onClick={handleClose}>

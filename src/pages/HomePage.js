@@ -74,7 +74,6 @@ function HomePage() {
           </Card>
         </Col>
 
-        {/* Kolom untuk Check-out */}
         <Col md={6} className="mb-4">
           <Card>
             <Card.Header className='fw-bold bg-light'>

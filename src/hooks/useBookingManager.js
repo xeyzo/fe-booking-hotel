@@ -62,6 +62,8 @@ export function useBookingManager() {
     setFormData(initialFormState);
     setAvailableRooms(null); 
     setShowModal(true);
+    setFormError([]);
+    setTransactionError('');
   };
 
   const handleShowEditModal = (booking) => {

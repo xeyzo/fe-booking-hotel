@@ -1,7 +1,6 @@
 import { useState, useEffect, useCallback } from 'react';
 import axios from 'axios';
 
-// State awal yang benar untuk form booking
 const initialFormState = {
   firstName: '',
   lastName: '',

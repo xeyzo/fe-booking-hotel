@@ -8,7 +8,6 @@ function DeleteBookingModalComponent({ show, handleClose, handleConfirm, itemNam
         <Modal.Title>Konfirmasi Hapus</Modal.Title>
       </Modal.Header>
       <Modal.Body>
-        {/* Teks diubah untuk konteks booking */}
         Apakah Anda yakin ingin menghapus data booking untuk tamu <strong>{itemName}</strong>? Tindakan ini tidak dapat dibatalkan.
       </Modal.Body>
       <Modal.Footer>

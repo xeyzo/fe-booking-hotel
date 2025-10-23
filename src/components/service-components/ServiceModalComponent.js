@@ -3,7 +3,6 @@ import { Modal, Button, Form, Alert } from 'react-bootstrap';
 
 function ServiceModalComponent({ show, handleClose, handleSubmit, serviceData, setServiceData, isEditMode, formError, transactionError}) {
 
-  // Fungsi generik untuk input text/number
   const handleChange = (e) => {
     const { name, value } = e.target;
     setServiceData(prevData => ({

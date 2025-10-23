@@ -1,12 +1,10 @@
 import React from 'react';
 import { Modal, Button } from 'react-bootstrap';
 
-// Perbaikan: Nama prop diubah menjadi `handleCancelBooking` agar konsisten
 function CancelBookingModalComponent({ show, handleClose, handleCancelBooking, itemName }) {
   return (
     <Modal show={show} onHide={handleClose} centered>
       <Modal.Header closeButton>
-        {/* Perbaikan: Judul disesuaikan */}
         <Modal.Title>Konfirmasi Pembatalan</Modal.Title>
       </Modal.Header>
       <Modal.Body>
@@ -16,7 +14,6 @@ function CancelBookingModalComponent({ show, handleClose, handleCancelBooking, i
         <Button variant="secondary" onClick={handleClose}>
           Tutup
         </Button>
-        {/* Perbaikan: onClick bisa lebih sederhana */}
         <Button variant="danger" onClick={handleCancelBooking}>
           Ya, Cancel Booking
         </Button>

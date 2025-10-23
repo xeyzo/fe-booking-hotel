@@ -3,7 +3,6 @@ import { Modal, Button, Form, Alert } from 'react-bootstrap';
 
 function AmenityModalComponent({ show, handleClose, handleSubmit, amenityData, setAmenityData, isEditMode, formError, transactionError}) {
 
-  // Fungsi generik untuk input text/number
   const handleChange = (e) => {
     const { name, value } = e.target;
     setAmenityData(prevData => ({

@@ -1,8 +1,5 @@
-// components/AddingAmenityModalComponent.jsx
-
 import { Modal, Button, Form } from 'react-bootstrap';
 
-// Hapus 'handleShowModal' dari props karena tidak digunakan di sini
 function AddingAmenityModalComponent({ show, handleClose, handleSave, amenityData, formData, setFormData }) {
   const handleChange = (e) => {
     const { name, value } = e.target;
@@ -21,8 +18,8 @@ function AddingAmenityModalComponent({ show, handleClose, handleSave, amenityDat
         <Form.Group className="mb-3">
           <Form.Label>Pilih amenity yang akan ditambahkan</Form.Label>
           <Form.Select
-            name="amenityTypeId" // <-- DIUBAH: Samakan dengan key di state
-            value={formData.amenityTypeId || ''} // <-- DIUBAH: Samakan & beri fallback
+            name="amenityTypeId" 
+            value={formData.amenityTypeId || ''} 
             onChange={handleChange}
           >
             <option value="" disabled>--Pilih amenity--</option>
@@ -36,8 +33,8 @@ function AddingAmenityModalComponent({ show, handleClose, handleSave, amenityDat
           <Form.Label>Note</Form.Label>
           <Form.Control
             as="textarea"
-            name="notes" // <-- DIUBAH: Samakan dengan key di state
-            value={formData.notes || ''} // <-- DIUBAH: Samakan & beri fallback
+            name="notes" 
+            value={formData.notes || ''}
             onChange={handleChange}
             placeholder="Catatan (opsional)"
           />

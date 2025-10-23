@@ -8,7 +8,6 @@ function DeleteServiceModalComponent({ show, handleClose, handleConfirm, itemNam
         <Modal.Title>Konfirmasi Hapus</Modal.Title>
       </Modal.Header>
       <Modal.Body>
-        {/* Tampilkan nama item yang akan dihapus agar lebih jelas */}
         Apakah Anda yakin ingin menghapus layanan <strong>{itemName}</strong>? Tindakan ini tidak dapat dibatalkan.
       </Modal.Body>
       <Modal.Footer>

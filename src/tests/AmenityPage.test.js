@@ -5,14 +5,12 @@ import '@testing-library/jest-dom';
 import AmenityPage from '../pages/AmenityPage';
 import { useAmenityManager } from '../hooks/useAmenityManager';
 
-// Mock the custom hook
 jest.mock('../hooks/useAmenityManager');
 
 const mockUseAmenityManager = useAmenityManager;
 
 describe('AmenityPage', () => {
   beforeEach(() => {
-    // Reset mocks before each test
     mockUseAmenityManager.mockReturnValue({
       amenities: [],
       loading: false,

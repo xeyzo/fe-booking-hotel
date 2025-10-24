@@ -1,4 +1,3 @@
-// src/tests/RoomPage.test.js
 import React from 'react';
 import { render, screen } from '@testing-library/react';
 import userEvent from '@testing-library/user-event';
@@ -6,18 +5,14 @@ import '@testing-library/jest-dom';
 import RoomPage from '../pages/RoomPage';
 import { useRoomManager } from '../hooks/useRoomManager';
 
-// 1. Mock the custom hook
 jest.mock('../hooks/useRoomManager');
 
-// 2. Cast the mocked hook to satisfy TypeScript/autocomplete
 const mockUseRoomManager = useRoomManager;
 
 describe('RoomPage', () => {
-  // 3. Create a base mock state in one place
   let baseMockState;
 
   beforeEach(() => {
-    // Reset the base state before each test to ensure test isolation
     baseMockState = {
       rooms: { content: [], totalPages: 0 },
       loading: false,
@@ -40,13 +35,10 @@ describe('RoomPage', () => {
       handleShowDeleteModal: jest.fn(),
       deletingRoom: null,
     };
-    // Set the default mock implementation for all tests
     mockUseRoomManager.mockReturnValue(baseMockState);
   });
 
-  // --- Rendering States ---
   test('renders loading state initially', () => {
-    // 5. Use the base state and override properties as needed for the specific test
     mockUseRoomManager.mockReturnValueOnce({
       ...baseMockState,
       loading: true,
@@ -89,11 +81,9 @@ describe('RoomPage', () => {
     expect(screen.getByText('102')).toBeInTheDocument();
   });
 
-  // --- User Interactions ---
   test('calls handleShowAddModal when add room button is clicked', async () => {
     render(<RoomPage />);
     await userEvent.click(screen.getByRole('button', { name: 'Add Room' }));
-    // Check the mock function from the base state
     expect(baseMockState.handleShowAddModal).toHaveBeenCalledTimes(1);
   });
 
@@ -121,7 +111,6 @@ describe('RoomPage', () => {
     expect(baseMockState.handleShowDeleteModal).toHaveBeenCalledWith(roomToDelete.id);
   });
 
-  // --- Modal Visibility ---
   test('renders add modal when showModal is true for adding', () => {
     mockUseRoomManager.mockReturnValueOnce({
       ...baseMockState,
@@ -130,7 +119,6 @@ describe('RoomPage', () => {
     });
 
     render(<RoomPage />);
-    // Assuming the modal has a title "Add New Room"
     expect(screen.getByText('Add New Room')).toBeInTheDocument();
   });
 
@@ -142,7 +130,6 @@ describe('RoomPage', () => {
     });
 
     render(<RoomPage />);
-    // Assuming the modal has a title "Edit Room"
     expect(screen.getByText('Edit Room')).toBeInTheDocument();
   });
 
@@ -150,15 +137,13 @@ describe('RoomPage', () => {
     mockUseRoomManager.mockReturnValueOnce({
       ...baseMockState,
       showDeleteModal: true,
-      deletingRoom: { id: 1 }, // Mock data for the modal
+      deletingRoom: { id: 1 },
     });
 
     render(<RoomPage />);
-    // Assuming the modal has a title "Delete Confirmation" after the previous text was not found.
     expect(screen.getByText('Konfirmasi Hapus')).toBeInTheDocument();
   });
 
-  // --- Pagination ---
   test('calls setCurrentPage when pagination button is clicked', async () => {
     mockUseRoomManager.mockReturnValueOnce({
       ...baseMockState,
@@ -167,6 +152,6 @@ describe('RoomPage', () => {
 
     render(<RoomPage />);
     await userEvent.click(screen.getByText('2'));
-    expect(baseMockState.setCurrentPage).toHaveBeenCalledWith(1); // Page '2' corresponds to index 1
+    expect(baseMockState.setCurrentPage).toHaveBeenCalledWith(1);
   });
 });

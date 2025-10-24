@@ -5,14 +5,12 @@ import '@testing-library/jest-dom';
 import ServicePage from '../pages/ServicePage';
 import { useServiceManager } from '../hooks/useServiceManager';
 
-// Mock the custom hook
 jest.mock('../hooks/useServiceManager');
 
 const mockUseServiceManager = useServiceManager;
 
 describe('ServicePage', () => {
   beforeEach(() => {
-    // Reset mocks before each test
     mockUseServiceManager.mockReturnValue({
       services: [],
       loading: false,
